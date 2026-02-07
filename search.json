@@ -39,13 +39,6 @@
     "href": "index.html",
     "title": "Weather Data",
     "section": "",
-    "text": "We will pull data from the “primary” weather station for downtown Austin, the Camp Mabry station, and complete various tasks with this data. You can find the downloadable data here."
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2"
+    "text": "We will pull data from the “primary” weather station for downtown Austin, the Camp Mabry station, and complete various tasks with this data. You can find the downloadable data here.\nThis is the link to the cleaning notebook."
   }
 ]
