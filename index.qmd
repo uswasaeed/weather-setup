@@ -3,3 +3,5 @@ title: "Weather Data"
 ---
 
 We will pull data from the "primary" weather station for downtown Austin, the Camp Mabry station, and complete various tasks with this data. You can find the downloadable data [here](https://www.ncei.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USW00013958/detail).
+
+This is the [link](01-cleaning.qmd) to the cleaning notebook. 
