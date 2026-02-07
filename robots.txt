@@ -1,0 +1,1 @@
+Sitemap: https://uswasaeed.github.io/weather-setup/sitemap.xml
