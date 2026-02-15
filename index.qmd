@@ -7,3 +7,15 @@ We will pull data from the "primary" weather station for downtown Austin, the Ca
 This is the [link](01-cleaning.qmd) to the cleaning notebook. 
 
 This is the [link](02-analysis.qmd) to the analysis notebook. 
+
+## Summary
+
+The data shows that the heaviest rainfall days in Austin brought more than five inches of rain in a single day, with the highest reaching 7.55 inches on Nov. 15, 2001.
+
+Other findings from the data analysis include:
+
+- Austin’s hottest recorded temperature was 112 degrees, reached on Sept. 5, 2000, and Aug. 28, 2011. Multiple hot days occurred in 2011, appearing three times among the top 10 hottest days.
+
+- The coldest days in Austin’s recorded history reached as low as -2 degrees on Jan. 31, 1949.
+
+- In 2011, Austin experienced 90 days with temperatures over 100 degrees, beating out 2023 by 10 more days over 100 degrees.
