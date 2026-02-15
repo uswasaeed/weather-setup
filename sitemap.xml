@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://uswasaeed.github.io/weather-setup/01-cleaning.html</loc>
-    <lastmod>2026-02-07T22:19:21.425Z</lastmod>
-  </url>
-  <url>
     <loc>https://uswasaeed.github.io/weather-setup/02-analysis.html</loc>
-    <lastmod>2026-02-15T02:44:42.243Z</lastmod>
+    <lastmod>2026-02-15T03:01:04.479Z</lastmod>
   </url>
   <url>
-    <loc>https://uswasaeed.github.io/weather-setup/index.html</loc>
-    <lastmod>2026-02-15T02:53:24.532Z</lastmod>
+    <loc>https://uswasaeed.github.io/weather-setup/01-cleaning.html</loc>
+    <lastmod>2026-02-15T02:59:58.604Z</lastmod>
   </url>
 </urlset>
