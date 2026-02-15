@@ -1,6 +1,6 @@
 "0","#| label: export"
 "0",""
 "0","write_rds("
-"0","  weather,"
+"0","  weather_clean,"
 "0","  ""data-processed/01-weather-cleaned.rds"""
 "0",")"

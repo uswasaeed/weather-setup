@@ -33,11 +33,11 @@ weather |> glimpse()
 Cleaning the columns and column names.
 
 ```{r}
-weather <- weather |>
+weather_clean <- weather |>
   clean_names() |>
   select(!c(tavg, tobs))
 
-weather |> glimpse()
+weather_clean |> glimpse()
 ```
 
 ## Export
@@ -48,7 +48,7 @@ Exporting the cleaned data as rds.
 #| label: export
 
 write_rds(
-  weather,
+  weather_clean,
   "data-processed/01-weather-cleaned.rds"
 )
 ```

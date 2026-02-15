@@ -35,10 +35,66 @@
     "text": "Export\nExporting the cleaned data as rds.\n\nwrite_rds(\n  weather,\n  \"data-processed/01-weather-cleaned.rds\"\n)"
   },
   {
+    "objectID": "02-analysis.html",
+    "href": "02-analysis.html",
+    "title": "Analysis",
+    "section": "",
+    "text": "Analyzing Austin weather data, specifically temperature and precipitation."
+  },
+  {
+    "objectID": "02-analysis.html#goal-of-this-notebook",
+    "href": "02-analysis.html#goal-of-this-notebook",
+    "title": "Analysis",
+    "section": "",
+    "text": "Analyzing Austin weather data, specifically temperature and precipitation."
+  },
+  {
+    "objectID": "02-analysis.html#setup",
+    "href": "02-analysis.html#setup",
+    "title": "Analysis",
+    "section": "Setup",
+    "text": "Setup\nLoading the libraries.\n\nlibrary(tidyverse)\nlibrary(janitor)"
+  },
+  {
+    "objectID": "02-analysis.html#import-the-data",
+    "href": "02-analysis.html#import-the-data",
+    "title": "Analysis",
+    "section": "Import the data",
+    "text": "Import the data\nImporting the weather data into the project.\n\nweather &lt;- read_rds(\"data-processed/01-weather-cleaned.rds\")\n\nweather |&gt; glimpse()\n\nRows: 32,022\nColumns: 8\n$ station &lt;chr&gt; \"USW00013958\", \"USW00013958\", \"USW00013958\", \"USW00013958\", \"U…\n$ name    &lt;chr&gt; \"AUSTIN CAMP MABRY, TX US\", \"AUSTIN CAMP MABRY, TX US\", \"AUSTI…\n$ date    &lt;date&gt; 1938-06-01, 1938-06-02, 1938-06-03, 1938-06-04, 1938-06-05, 1…\n$ prcp    &lt;dbl&gt; 0.00, 0.00, 0.00, 0.40, 0.02, 0.00, 0.00, 0.00, 1.60, 0.01, 0.…\n$ snow    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…\n$ snwd    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…\n$ tmax    &lt;dbl&gt; 91, 94, 94, 90, 94, 92, 95, 92, 87, 90, 92, 91, 91, 91, 89, 89…\n$ tmin    &lt;dbl&gt; 72, 67, 70, 68, 68, 70, 70, 76, 64, 76, 75, 71, 70, 68, 71, 70…"
+  },
+  {
+    "objectID": "02-analysis.html#days-with-most-rain",
+    "href": "02-analysis.html#days-with-most-rain",
+    "title": "Analysis",
+    "section": "Days with most rain",
+    "text": "Days with most rain\nWhich days had the most rain, and how much rain are we talking about?\n\nweather |&gt;\n  select(date, prcp) |&gt;\n  arrange(desc(prcp)) |&gt;\n  filter(prcp &gt;= 5)\n\n# A tibble: 8 × 2\n  date        prcp\n  &lt;date&gt;     &lt;dbl&gt;\n1 2001-11-15  7.55\n2 2010-09-07  7.04\n3 1998-10-17  6.24\n4 1994-08-09  5.68\n5 1981-06-11  5.66\n6 1979-05-21  5.55\n7 2015-05-25  5.2 \n8 2017-08-26  5.08\n\n\nData Takeaway: The heaviest rainfall days in Austin brought more than five inches of rain in a single day, with the highest reaching 7.55 inches on Nov. 15, 2001."
+  },
+  {
+    "objectID": "02-analysis.html#hottest-days",
+    "href": "02-analysis.html#hottest-days",
+    "title": "Analysis",
+    "section": "Hottest days",
+    "text": "Hottest days\nWhat are the hottest days in history?\n\nweather |&gt;\n  select(date, tmax) |&gt;\n  arrange(desc(tmax)) |&gt;\n  head(10)\n\n# A tibble: 10 × 2\n   date        tmax\n   &lt;date&gt;     &lt;dbl&gt;\n 1 2000-09-05   112\n 2 2011-08-28   112\n 3 2000-09-04   110\n 4 2003-08-08   110\n 5 2011-08-27   110\n 6 2018-07-23   110\n 7 2022-07-10   110\n 8 2023-08-17   110\n 9 1954-07-26   109\n10 2011-08-29   109\n\n\nData Takeaway: Austin’s hottest recorded temperature was 112 degrees, reached on Sept. 5, 2000, and Aug. 28, 2011. Multiple hot days occurred in 2011, appearing three times among the top 10 hottest days."
+  },
+  {
+    "objectID": "02-analysis.html#coldest-days",
+    "href": "02-analysis.html#coldest-days",
+    "title": "Analysis",
+    "section": "Coldest days",
+    "text": "Coldest days\nWhat are the coldest days in history?\n\nweather |&gt;\n  select(date, tmin) |&gt;\n  arrange(tmin) |&gt;\n  head(10)\n\n# A tibble: 10 × 2\n   date        tmin\n   &lt;date&gt;     &lt;dbl&gt;\n 1 1949-01-31    -2\n 2 1949-01-30     4\n 3 1989-12-23     4\n 4 1951-02-02     7\n 5 2021-02-16     7\n 6 2021-02-15     8\n 7 1940-01-19    10\n 8 1983-12-25    10\n 9 1982-01-11    11\n10 1940-01-23    12\n\n\nData Takeaway: The coldest days in Austin’s recorded history reached as low as -2 degrees on Jan. 31, 1949."
+  },
+  {
+    "objectID": "02-analysis.html#days-over-100",
+    "href": "02-analysis.html#days-over-100",
+    "title": "Analysis",
+    "section": "Days over 100",
+    "text": "Days over 100\nWhich years had the most days of 100+ temperature? i.e., group by year and count the number of days with 100+ temps.\n\nweather |&gt;\n  filter(tmax &gt;= 100) |&gt;\n  group_by(year = year(date)) |&gt;\n  summarize(days_100_plus = n()) |&gt;\n  arrange(desc(days_100_plus)) |&gt;\n  filter(days_100_plus &gt;= 50)\n\n# A tibble: 7 × 2\n   year days_100_plus\n  &lt;dbl&gt;         &lt;int&gt;\n1  2011            90\n2  2023            80\n3  2009            68\n4  2022            68\n5  2019            57\n6  2018            52\n7  2008            50\n\n\nData Takeaway: In 2011, Austin experienced 90 days with temperatures over 100 degrees, beating out 2023 by 10 more days over 100 degrees."
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Weather Data",
     "section": "",
-    "text": "We will pull data from the “primary” weather station for downtown Austin, the Camp Mabry station, and complete various tasks with this data. You can find the downloadable data here.\nThis is the link to the cleaning notebook."
+    "text": "We will pull data from the “primary” weather station for downtown Austin, the Camp Mabry station, and complete various tasks with this data. You can find the downloadable data here.\nThis is the link to the cleaning notebook.\nThis is the link to the analysis notebook."
   }
 ]

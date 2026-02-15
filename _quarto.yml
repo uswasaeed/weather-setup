@@ -1,21 +1,21 @@
 project:
   type: website
+  render:
+  - "01-cleaning.qmd"
+  - "02-analysis.qmd"
 
 website:
-  title: "uswa-weather"
-  navbar:
-    left:
+  title: "Austin Weather Analysis"
+  sidebar:
+    contents:
       - href: index.qmd
         text: Home
-      - about.qmd
+      - auto: "*.qmd"
 
 format:
   html:
-    theme:
-      - cosmo
-      - brand
+    theme: cosmo
     css: styles.css
     toc: true
-
-
-
+    df-print: paged
+    code-overflow: wrap
