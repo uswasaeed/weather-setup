@@ -1,0 +1,88 @@
+---
+title: "Analysis"
+format: html
+---
+
+## Goal of this notebook
+
+Analyzing Austin weather data, specifically temperature and precipitation.  
+
+## Setup
+
+Loading the libraries.
+
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(janitor)
+```
+
+## Import the data
+
+Importing the weather data into the project.
+
+```{r}
+#| label: import
+
+weather <- read_rds("data-processed/01-weather-cleaned.rds")
+
+weather |> glimpse()
+```
+
+## Days with most rain
+
+Which days had the most rain, and how much rain are we talking about?
+
+```{r}
+weather |>
+  select(date, prcp) |>
+  arrange(desc(prcp)) |>
+  filter(prcp >= 5)
+```
+
+Data Takeaway: The heaviest rainfall days in Austin brought more than five inches of rain in a single day, with the highest reaching 7.55 inches on Nov. 15, 2001.
+
+## Hottest days
+
+What are the hottest days in history?
+
+```{r}
+weather |>
+  select(date, tmax) |>
+  arrange(desc(tmax)) |>
+  head(10)
+```
+
+Data Takeaway: Austin’s hottest recorded temperature was 112 degrees, reached on Sept. 5, 2000, and Aug. 28, 2011. Multiple hot days occurred in 2011, appearing three times among the top 10 hottest days.
+
+## Coldest days
+
+What are the coldest days in history? 
+
+```{r}
+weather |>
+  select(date, tmin) |>
+  arrange(tmin) |>
+  head(10)
+```
+
+Data Takeaway: The coldest days in Austin’s recorded history reached as low as -2 degrees on Jan. 31, 1949.
+
+## Days over 100
+
+Which years had the most days of 100+ temperature? i.e., group by year and count the number of days with 100+ temps.
+
+```{r}
+weather |>
+  filter(tmax >= 100) |>
+  group_by(year = year(date)) |>
+  summarize(days_100_plus = n()) |>
+  arrange(desc(days_100_plus)) |>
+  filter(days_100_plus >= 50)
+```
+
+Data Takeaway: In 2011, Austin experienced 90 days with temperatures over 100 degrees, beating out 2023 by 10 more days over 100 degrees.
+
