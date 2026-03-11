@@ -19,3 +19,19 @@ Other findings from the data analysis include:
 - The coldest days in Austin’s recorded history reached as low as -2 degrees on Jan. 31, 1949.
 
 - In 2011, Austin experienced 90 days with temperatures over 100 degrees, beating out 2023 by 10 more days over 100 degrees.
+
+- Austin’s wettest year in the dataset was 2015, which recorded nearly 60 inches of rainfall. Other notably rainy years include 2004, 1991, and 1957, all exceeding 50 inches.
+
+- The driest complete years include 1938, 1954, and 1956, all under 16 inches of total rainfall (excluding 2026, which is still ongoing).
+
+- The snowiest year was 1985 with 8.7 inches, followed by 2021 with 7.9 inches and 1944 with 7.0 inches, showing that significant snow is uncommon in Austin.
+
+- The warmest years based on average high and low temperatures include 1938 and 2011, both with average highs above 84 degrees. Average lows for these years are also relatively high, with 2024 having the highest low temperature at just over 62 degrees.
+
+- Since 1990, May has been the wettest month in Austin by a large margin, averaging just over five inches of rain, while February is the least rainy month, being the only one averaging under two inches.
+
+- Austin’s warmest year based on average yearly temperature is 1938, but all the top five years exceed 72 degrees. Disregarding 2026, 1940 was notably the lowest average yearly temperature, just under 66 degrees.
+
+- The earliest 100-degree day in Austin’s recorded history occurred on May 4, 1984, reaching 100 degrees, while other years varied widely, with some first 100-degree days as late as mid-August.
+
+- The latest freeze in Austin before July occurred on February 22, 2025, with a low of 30 degrees.
