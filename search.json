@@ -18,7 +18,7 @@
     "href": "02-analysis.html#setup",
     "title": "Analysis",
     "section": "Setup",
-    "text": "Setup\nLoading the libraries.\n\nlibrary(tidyverse)\nlibrary(janitor)"
+    "text": "Setup\nLoading the libraries.\n\nlibrary(tidyverse)\nlibrary(janitor)\nlibrary(lubridate)"
   },
   {
     "objectID": "02-analysis.html#import-the-data",
@@ -54,6 +54,62 @@
     "title": "Analysis",
     "section": "Days over 100",
     "text": "Days over 100\nWhich years had the most days of 100+ temperature? i.e., group by year and count the number of days with 100+ temps.\n\nweather |&gt;\n  filter(tmax &gt;= 100) |&gt;\n  group_by(year = year(date)) |&gt;\n  summarize(days_100_plus = n()) |&gt;\n  arrange(desc(days_100_plus)) |&gt;\n  filter(days_100_plus &gt;= 50)\n\n\n  \n\n\n\nData Takeaway: In 2011, Austin experienced 90 days with temperatures over 100 degrees, beating out 2023 by 10 more days over 100 degrees."
+  },
+  {
+    "objectID": "02-analysis.html#years-with-the-most-rainfall",
+    "href": "02-analysis.html#years-with-the-most-rainfall",
+    "title": "Analysis",
+    "section": "Years with the most rainfall",
+    "text": "Years with the most rainfall\nWhich years had the most total rainfall and how much?\n\nweather |&gt;\n  group_by(year = year(date)) |&gt;\n  summarize(total_rain = sum(prcp, na.rm = TRUE)) |&gt;\n  arrange(desc(total_rain))\n\n\n  \n\n\n\nData Takeaway: Austin’s wettest year in the dataset was 2015, which recorded nearly 60 inches of rainfall. Other notably rainy years include 2004, 1991 and 1957, all exceeding 50 inches."
+  },
+  {
+    "objectID": "02-analysis.html#years-with-the-least-rainfall",
+    "href": "02-analysis.html#years-with-the-least-rainfall",
+    "title": "Analysis",
+    "section": "Years with the least rainfall",
+    "text": "Years with the least rainfall\nWhich years had the lowest total rainfall?\n\nweather |&gt;\n  group_by(year = year(date)) |&gt;\n  summarize(total_rain = sum(prcp, na.rm = TRUE)) |&gt;\n  arrange(total_rain) |&gt;\n  head(10)\n\n\n  \n\n\n\nData Takeaway: The dataset shows 2026 with only 1.44 inches of rainfall so far, but this year is still ongoing, so the total isn’t final. Excluding 2026, the driest complete years include 1938, 1954 and 1956, all under 16 inches."
+  },
+  {
+    "objectID": "02-analysis.html#years-with-the-most-snowfall",
+    "href": "02-analysis.html#years-with-the-most-snowfall",
+    "title": "Analysis",
+    "section": "Years with the most snowfall",
+    "text": "Years with the most snowfall\nWhich years had the most total snowfall?\n\nweather |&gt;\n  group_by(year = year(date)) |&gt;\n  summarize(total_snow = sum(snow, na.rm = TRUE)) |&gt;\n  arrange(desc(total_snow))\n\n\n  \n\n\n\nData Takeaway: The snowiest year was 1985 with 8.7 inches, followed by 2021 with 7.9 inches and 1944 with 7.0 inches. Most other years recorded only a few inches, showing that significant snow is uncommon in Austin."
+  },
+  {
+    "objectID": "02-analysis.html#average-high-and-low-temperature-by-year",
+    "href": "02-analysis.html#average-high-and-low-temperature-by-year",
+    "title": "Analysis",
+    "section": "Average high and low temperature by year",
+    "text": "Average high and low temperature by year\nCalculating the average high temperature and average low temperature for each year.\n\nweather |&gt;\n  group_by(year = year(date)) |&gt;\n  summarize(\n    avg_high_temp = mean(tmax, na.rm = TRUE),\n    avg_low_temp = mean(tmin, na.rm = TRUE)\n  ) |&gt;\n  arrange(desc(avg_high_temp))\n\n\n  \n\n\n\nData Takeaway: The warmest years in Austin, based on average highs and lows, include 1938 and 2011, both with average highs above 84 degrees. Average lows for these years also remain relatively high, although 2024 has the highest low temperature, just over 62 degrees."
+  },
+  {
+    "objectID": "02-analysis.html#average-monthly-rainfall-since-1990",
+    "href": "02-analysis.html#average-monthly-rainfall-since-1990",
+    "title": "Analysis",
+    "section": "Average monthly rainfall since 1990",
+    "text": "Average monthly rainfall since 1990\nCalculating total rainfall for each month since 1990, then average rainfall for each month.\n\nrain_month_year &lt;- weather |&gt;\n  filter(year(date) &gt;= 1990) |&gt;\n  group_by(year = year(date), month = month(date, label = TRUE)) |&gt;\n  summarize(total_rain = sum(prcp, na.rm = TRUE))\n\n`summarise()` has grouped output by 'year'. You can override using the\n`.groups` argument.\n\nrain_month_year |&gt;\n  ungroup() |&gt;\n  group_by(month) |&gt;\n  summarize(avg_monthly_rain = mean(total_rain, na.rm = TRUE)) |&gt;\n  arrange(desc(avg_monthly_rain))\n\n\n  \n\n\n\nData Takeaway: Since 1990, May has been the wettest month in Austin by a large margin, averaging just over five inches of rain. February is the least rainy month, being the only one averaging under two inches."
+  },
+  {
+    "objectID": "02-analysis.html#average-yearly-temperature",
+    "href": "02-analysis.html#average-yearly-temperature",
+    "title": "Analysis",
+    "section": "Average yearly temperature",
+    "text": "Average yearly temperature\nCalculating the average yearly temperature using the average high and average low temperatures.\n\nweather |&gt;\n  group_by(year = year(date)) |&gt;\n  summarize(\n    avg_high_temp = mean(tmax, na.rm = TRUE),\n    avg_low_temp = mean(tmin, na.rm = TRUE)\n  ) |&gt;\n  mutate(avg_year_temp = (avg_high_temp + avg_low_temp) / 2) |&gt;\n  arrange(desc(avg_year_temp))\n\n\n  \n\n\n\nData Takeaway: Austin’s warmest year based on average yearly temperature is 1938, but all the top five years exceed 72 degrees. Disregarding 2026, 1940 was notably the lowest average yearly temperature, just under 66 degrees."
+  },
+  {
+    "objectID": "02-analysis.html#earliest-100-degree-day-each-year",
+    "href": "02-analysis.html#earliest-100-degree-day-each-year",
+    "title": "Analysis",
+    "section": "Earliest 100-degree day each year",
+    "text": "Earliest 100-degree day each year\nWhat is the earliest date each year that reached 100 degrees?\n\nweather |&gt;\n  filter(tmax &gt;= 100) |&gt;\n  group_by(year = year(date)) |&gt;\n  arrange(date) |&gt;\n  slice_min(date, n = 1) |&gt;\n  select(year, date, tmax) |&gt;\n  ungroup() |&gt;\n  arrange(date)\n\n\n  \n\n\n\nData Takeaway: The earliest 100-degree days in Austin vary widely by year. For example, in 1938, the first 100-degree day was on Aug. 15, while in 1939 it occurred as early as June 15.\nWhich year had the earliest date?\n\nweather |&gt;\n  filter(tmax &gt;= 100) |&gt;\n  mutate(\n    day_of_year = yday(date),\n    year = year(date)\n  ) |&gt;\n  slice_min(day_of_year, n = 1) |&gt;\n  select(year, date, tmax)\n\n\n  \n\n\n\nData Takeaway: The earliest 100-degree day in Austin’s recorded history occurred on May 4, 1984, reaching 100 degrees."
+  },
+  {
+    "objectID": "02-analysis.html#latest-freeze-before-july-1",
+    "href": "02-analysis.html#latest-freeze-before-july-1",
+    "title": "Analysis",
+    "section": "Latest freeze before July 1",
+    "text": "Latest freeze before July 1\nWhich year had the latest freeze date?\n\nweather |&gt;\n  filter(tmin &lt;= 32, month(date) &lt; 7, year(date) &lt; 2026) |&gt; \n  mutate(year = year(date)) |&gt;\n  slice_max(date, n = 1) |&gt;\n  select(year, date, tmin)\n\n\n  \n\n\n\nData Takeaway: The latest freeze in Austin before July occurred on Feb. 22, 2025, with a low of 30 degrees."
   },
   {
     "objectID": "01-cleaning.html",

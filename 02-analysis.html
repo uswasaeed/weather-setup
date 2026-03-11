@@ -169,6 +169,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#hottest-days" id="toc-hottest-days" class="nav-link" data-scroll-target="#hottest-days">Hottest days</a></li>
   <li><a href="#coldest-days" id="toc-coldest-days" class="nav-link" data-scroll-target="#coldest-days">Coldest days</a></li>
   <li><a href="#days-over-100" id="toc-days-over-100" class="nav-link" data-scroll-target="#days-over-100">Days over 100</a></li>
+  <li><a href="#years-with-the-most-rainfall" id="toc-years-with-the-most-rainfall" class="nav-link" data-scroll-target="#years-with-the-most-rainfall">Years with the most rainfall</a></li>
+  <li><a href="#years-with-the-least-rainfall" id="toc-years-with-the-least-rainfall" class="nav-link" data-scroll-target="#years-with-the-least-rainfall">Years with the least rainfall</a></li>
+  <li><a href="#years-with-the-most-snowfall" id="toc-years-with-the-most-snowfall" class="nav-link" data-scroll-target="#years-with-the-most-snowfall">Years with the most snowfall</a></li>
+  <li><a href="#average-high-and-low-temperature-by-year" id="toc-average-high-and-low-temperature-by-year" class="nav-link" data-scroll-target="#average-high-and-low-temperature-by-year">Average high and low temperature by year</a></li>
+  <li><a href="#average-monthly-rainfall-since-1990" id="toc-average-monthly-rainfall-since-1990" class="nav-link" data-scroll-target="#average-monthly-rainfall-since-1990">Average monthly rainfall since 1990</a></li>
+  <li><a href="#average-yearly-temperature" id="toc-average-yearly-temperature" class="nav-link" data-scroll-target="#average-yearly-temperature">Average yearly temperature</a></li>
+  <li><a href="#earliest-100-degree-day-each-year" id="toc-earliest-100-degree-day-each-year" class="nav-link" data-scroll-target="#earliest-100-degree-day-each-year">Earliest 100-degree day each year</a></li>
+  <li><a href="#latest-freeze-before-july-1" id="toc-latest-freeze-before-july-1" class="nav-link" data-scroll-target="#latest-freeze-before-july-1">Latest freeze before July 1</a></li>
   </ul>
 </nav>
     </div>
@@ -203,7 +211,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Loading the libraries.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="import-the-data" class="level2">
@@ -300,6 +309,191 @@ $ tmin    &lt;dbl&gt; 72, 67, 70, 68, 68, 70, 70, 76, 64, 76, 75, 71, 70, 68, 71
 </div>
 </div>
 <p>Data Takeaway: In 2011, Austin experienced 90 days with temperatures over 100 degrees, beating out 2023 by 10 more days over 100 degrees.</p>
+</section>
+<section id="years-with-the-most-rainfall" class="level2">
+<h2 class="anchored" data-anchor-id="years-with-the-most-rainfall">Years with the most rainfall</h2>
+<p>Which years had the most total rainfall and how much?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">year =</span> <span class="fu">year</span>(date)) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">total_rain =</span> <span class="fu">sum</span>(prcp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_rain))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["year"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["total_rain"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"2015","2":"59.96"},{"1":"2004","2":"52.27"},{"1":"1991","2":"52.21"},{"1":"1957","2":"51.30"},{"1":"1946","2":"47.28"},{"1":"2007","2":"46.95"},{"1":"1997","2":"46.79"},{"1":"1992","2":"46.05"},{"1":"1981","2":"45.73"},{"1":"1941","2":"45.39"},{"1":"1944","2":"42.97"},{"1":"2001","2":"42.87"},{"1":"1976","2":"41.25"},{"1":"1994","2":"41.16"},{"1":"2013","2":"41.03"},{"1":"1958","2":"41.02"},{"1":"1945","2":"40.87"},{"1":"1965","2":"40.57"},{"1":"2018","2":"40.52"},{"1":"1973","2":"40.46"},{"1":"1998","2":"39.12"},{"1":"1940","2":"38.95"},{"1":"2016","2":"38.85"},{"1":"1968","2":"38.72"},{"1":"2010","2":"37.76"},{"1":"2021","2":"37.73"},{"1":"1979","2":"37.50"},{"1":"2000","2":"37.27"},{"1":"1975","2":"36.81"},{"1":"1987","2":"36.66"},{"1":"1961","2":"36.47"},{"1":"1949","2":"36.34"},{"1":"1974","2":"36.21"},{"1":"2002","2":"36.00"},{"1":"1960","2":"35.82"},{"1":"2014","2":"35.53"},{"1":"2020","2":"35.08"},{"1":"1986","2":"35.01"},{"1":"1959","2":"34.96"},{"1":"2017","2":"34.72"},{"1":"2006","2":"34.70"},{"1":"1983","2":"33.98"},{"1":"1995","2":"33.98"},{"1":"1969","2":"33.59"},{"1":"1967","2":"33.54"},{"1":"1962","2":"33.48"},{"1":"2012","2":"32.98"},{"1":"1964","2":"32.97"},{"1":"1985","2":"32.49"},{"1":"1942","2":"32.22"},{"1":"2019","2":"31.86"},{"1":"2009","2":"31.38"},{"1":"1978","2":"30.97"},{"1":"1970","2":"30.64"},{"1":"1953","2":"29.68"},{"1":"1996","2":"29.56"},{"1":"1951","2":"28.98"},{"1":"1990","2":"28.44"},{"1":"2024","2":"28.25"},{"1":"1952","2":"27.71"},{"1":"1980","2":"27.38"},{"1":"2023","2":"26.83"},{"1":"1982","2":"26.63"},{"1":"2022","2":"26.59"},{"1":"1993","2":"26.50"},{"1":"1984","2":"26.30"},{"1":"1972","2":"26.07"},{"1":"1989","2":"25.87"},{"1":"2025","2":"25.86"},{"1":"1950","2":"25.79"},{"1":"1966","2":"25.19"},{"1":"1971","2":"24.95"},{"1":"1943","2":"24.74"},{"1":"1999","2":"23.93"},{"1":"1939","2":"23.59"},{"1":"1955","2":"22.54"},{"1":"2005","2":"22.33"},{"1":"1977","2":"22.14"},{"1":"1947","2":"21.58"},{"1":"2003","2":"21.41"},{"1":"1948","2":"20.98"},{"1":"2011","2":"19.68"},{"1":"1988","2":"19.21"},{"1":"1963","2":"17.30"},{"1":"2008","2":"16.07"},{"1":"1956","2":"15.41"},{"1":"1954","2":"11.42"},{"1":"1938","2":"11.33"},{"1":"2026","2":"1.44"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Data Takeaway: Austin’s wettest year in the dataset was 2015, which recorded nearly 60 inches of rainfall. Other notably rainy years include 2004, 1991 and 1957, all exceeding 50 inches.</p>
+</section>
+<section id="years-with-the-least-rainfall" class="level2">
+<h2 class="anchored" data-anchor-id="years-with-the-least-rainfall">Years with the least rainfall</h2>
+<p>Which years had the lowest total rainfall?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">year =</span> <span class="fu">year</span>(date)) <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">total_rain =</span> <span class="fu">sum</span>(prcp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(total_rain) <span class="sc">|&gt;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["year"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["total_rain"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"2026","2":"1.44"},{"1":"1938","2":"11.33"},{"1":"1954","2":"11.42"},{"1":"1956","2":"15.41"},{"1":"2008","2":"16.07"},{"1":"1963","2":"17.30"},{"1":"1988","2":"19.21"},{"1":"2011","2":"19.68"},{"1":"1948","2":"20.98"},{"1":"2003","2":"21.41"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Data Takeaway: The dataset shows 2026 with only 1.44 inches of rainfall so far, but this year is still ongoing, so the total isn’t final. Excluding 2026, the driest complete years include 1938, 1954 and 1956, all under 16 inches.</p>
+</section>
+<section id="years-with-the-most-snowfall" class="level2">
+<h2 class="anchored" data-anchor-id="years-with-the-most-snowfall">Years with the most snowfall</h2>
+<p>Which years had the most total snowfall?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">year =</span> <span class="fu">year</span>(date)) <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">total_snow =</span> <span class="fu">sum</span>(snow, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_snow))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["year"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["total_snow"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1985","2":"8.7"},{"1":"2021","2":"7.9"},{"1":"1944","2":"7.0"},{"1":"1949","2":"6.5"},{"1":"1966","2":"6.0"},{"1":"1964","2":"4.6"},{"1":"1965","2":"2.5"},{"1":"1940","2":"2.0"},{"1":"1967","2":"2.0"},{"1":"1980","2":"2.0"},{"1":"1982","2":"2.0"},{"1":"1973","2":"1.7"},{"1":"1951","2":"1.6"},{"1":"2004","2":"1.6"},{"1":"1970","2":"1.5"},{"1":"1959","2":"1.0"},{"1":"1963","2":"1.0"},{"1":"2011","2":"0.9"},{"1":"1947","2":"0.8"},{"1":"2003","2":"0.6"},{"1":"2010","2":"0.6"},{"1":"2026","2":"0.6"},{"1":"1994","2":"0.4"},{"1":"2017","2":"0.4"},{"1":"2025","2":"0.4"},{"1":"1958","2":"0.3"},{"1":"1996","2":"0.3"},{"1":"1946","2":"0.2"},{"1":"2007","2":"0.2"},{"1":"2014","2":"0.2"},{"1":"2008","2":"0.1"},{"1":"2022","2":"0.1"},{"1":"1938","2":"0.0"},{"1":"1939","2":"0.0"},{"1":"1941","2":"0.0"},{"1":"1942","2":"0.0"},{"1":"1943","2":"0.0"},{"1":"1945","2":"0.0"},{"1":"1948","2":"0.0"},{"1":"1950","2":"0.0"},{"1":"1952","2":"0.0"},{"1":"1953","2":"0.0"},{"1":"1954","2":"0.0"},{"1":"1955","2":"0.0"},{"1":"1956","2":"0.0"},{"1":"1957","2":"0.0"},{"1":"1960","2":"0.0"},{"1":"1961","2":"0.0"},{"1":"1962","2":"0.0"},{"1":"1968","2":"0.0"},{"1":"1969","2":"0.0"},{"1":"1971","2":"0.0"},{"1":"1972","2":"0.0"},{"1":"1974","2":"0.0"},{"1":"1975","2":"0.0"},{"1":"1976","2":"0.0"},{"1":"1977","2":"0.0"},{"1":"1978","2":"0.0"},{"1":"1979","2":"0.0"},{"1":"1981","2":"0.0"},{"1":"1983","2":"0.0"},{"1":"1984","2":"0.0"},{"1":"1986","2":"0.0"},{"1":"1987","2":"0.0"},{"1":"1988","2":"0.0"},{"1":"1989","2":"0.0"},{"1":"1990","2":"0.0"},{"1":"1991","2":"0.0"},{"1":"1992","2":"0.0"},{"1":"1993","2":"0.0"},{"1":"1995","2":"0.0"},{"1":"1997","2":"0.0"},{"1":"1998","2":"0.0"},{"1":"1999","2":"0.0"},{"1":"2000","2":"0.0"},{"1":"2001","2":"0.0"},{"1":"2002","2":"0.0"},{"1":"2005","2":"0.0"},{"1":"2006","2":"0.0"},{"1":"2009","2":"0.0"},{"1":"2012","2":"0.0"},{"1":"2013","2":"0.0"},{"1":"2015","2":"0.0"},{"1":"2016","2":"0.0"},{"1":"2018","2":"0.0"},{"1":"2019","2":"0.0"},{"1":"2020","2":"0.0"},{"1":"2023","2":"0.0"},{"1":"2024","2":"0.0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Data Takeaway: The snowiest year was 1985 with 8.7 inches, followed by 2021 with 7.9 inches and 1944 with 7.0 inches. Most other years recorded only a few inches, showing that significant snow is uncommon in Austin.</p>
+</section>
+<section id="average-high-and-low-temperature-by-year" class="level2">
+<h2 class="anchored" data-anchor-id="average-high-and-low-temperature-by-year">Average high and low temperature by year</h2>
+<p>Calculating the average high temperature and average low temperature for each year.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">year =</span> <span class="fu">year</span>(date)) <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_high_temp =</span> <span class="fu">mean</span>(tmax, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_low_temp =</span> <span class="fu">mean</span>(tmin, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(avg_high_temp))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["year"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["avg_high_temp"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["avg_low_temp"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"1938","2":"85.08879","3":"61.00467"},{"1":"2011","2":"84.05753","3":"60.13699"},{"1":"2023","2":"83.48219","3":"61.03836"},{"1":"2024","2":"83.43443","3":"62.07377"},{"1":"2022","2":"83.08493","3":"59.47123"},{"1":"2006","2":"83.03836","3":"60.28219"},{"1":"2020","2":"82.99180","3":"60.65847"},{"1":"2017","2":"82.98082","3":"61.33151"},{"1":"2008","2":"82.88251","3":"58.90164"},{"1":"2025","2":"82.84637","3":"60.58939"},{"1":"2012","2":"82.67760","3":"60.62568"},{"1":"1954","2":"82.21644","3":"58.69863"},{"1":"1956","2":"82.20765","3":"58.27596"},{"1":"1999","2":"82.07123","3":"60.34247"},{"1":"2009","2":"81.85205","3":"59.33699"},{"1":"2016","2":"81.60929","3":"61.13388"},{"1":"1990","2":"81.44384","3":"60.03836"},{"1":"2019","2":"81.44110","3":"59.96986"},{"1":"2021","2":"81.38630","3":"60.29863"},{"1":"2013","2":"81.36164","3":"58.76986"},{"1":"1939","2":"81.15616","3":"56.76164"},{"1":"2005","2":"80.87123","3":"59.15342"},{"1":"1955","2":"80.74795","3":"58.16164"},{"1":"2018","2":"80.72329","3":"60.18904"},{"1":"2000","2":"80.65301","3":"59.85792"},{"1":"1998","2":"80.62466","3":"61.00548"},{"1":"1951","2":"80.62192","3":"57.40548"},{"1":"1963","2":"80.41644","3":"58.20548"},{"1":"1953","2":"80.33425","3":"57.55068"},{"1":"1971","2":"80.28767","3":"59.04110"},{"1":"1988","2":"80.20765","3":"58.17486"},{"1":"1996","2":"80.15847","3":"58.27869"},{"1":"1984","2":"80.15027","3":"58.53825"},{"1":"1994","2":"80.14795","3":"59.62740"},{"1":"2003","2":"80.03562","3":"59.21096"},{"1":"2015","2":"80.03288","3":"59.68493"},{"1":"1950","2":"79.82740","3":"57.89041"},{"1":"2014","2":"79.69315","3":"58.38904"},{"1":"1980","2":"79.68306","3":"58.21585"},{"1":"2010","2":"79.67397","3":"58.57808"},{"1":"1967","2":"79.65479","3":"57.72603"},{"1":"1948","2":"79.60656","3":"56.53552"},{"1":"1952","2":"79.46721","3":"56.61475"},{"1":"1989","2":"79.38630","3":"57.83014"},{"1":"1962","2":"79.33425","3":"58.02740"},{"1":"1986","2":"79.29041","3":"59.67945"},{"1":"1977","2":"79.18904","3":"58.23836"},{"1":"1981","2":"79.18630","3":"59.48219"},{"1":"1982","2":"79.11781","3":"59.28493"},{"1":"2002","2":"79.01918","3":"58.70685"},{"1":"1964","2":"78.95628","3":"57.99727"},{"1":"2004","2":"78.93169","3":"59.77049"},{"1":"2007","2":"78.86027","3":"59.38630"},{"1":"1991","2":"78.85479","3":"59.12329"},{"1":"2001","2":"78.84110","3":"58.68219"},{"1":"1995","2":"78.83836","3":"58.93151"},{"1":"1992","2":"78.82787","3":"58.83607"},{"1":"1993","2":"78.76164","3":"58.39452"},{"1":"1972","2":"78.68033","3":"58.24590"},{"1":"1945","2":"78.67123","3":"57.87945"},{"1":"1949","2":"78.66027","3":"57.35890"},{"1":"1943","2":"78.49863","3":"56.68767"},{"1":"1987","2":"78.46849","3":"58.07671"},{"1":"1969","2":"78.31781","3":"57.55342"},{"1":"1946","2":"78.17260","3":"58.32603"},{"1":"1942","2":"78.12603","3":"56.36438"},{"1":"1965","2":"78.09589","3":"58.47945"},{"1":"1957","2":"78.06849","3":"58.33973"},{"1":"1975","2":"77.95068","3":"57.13699"},{"1":"1974","2":"77.94521","3":"57.74521"},{"1":"1947","2":"77.87945","3":"56.52877"},{"1":"1959","2":"77.87123","3":"56.99726"},{"1":"1985","2":"77.80822","3":"58.69589"},{"1":"1966","2":"77.77534","3":"56.66849"},{"1":"1941","2":"77.69589","3":"57.89315"},{"1":"1961","2":"77.65205","3":"57.12055"},{"1":"1940","2":"77.48361","3":"54.30601"},{"1":"1944","2":"77.45628","3":"56.99180"},{"1":"1970","2":"77.44384","3":"56.72603"},{"1":"1973","2":"77.28767","3":"57.60822"},{"1":"1958","2":"77.19726","3":"57.01370"},{"1":"1978","2":"76.95342","3":"57.22192"},{"1":"1960","2":"76.92077","3":"57.46995"},{"1":"1997","2":"76.45479","3":"57.87945"},{"1":"1968","2":"76.35519","3":"56.13661"},{"1":"1976","2":"76.28415","3":"56.05191"},{"1":"1979","2":"76.26027","3":"56.29041"},{"1":"1983","2":"76.16164","3":"56.24110"},{"1":"2026","2":"64.57576","3":"40.39394"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Data Takeaway: The warmest years in Austin, based on average highs and lows, include 1938 and 2011, both with average highs above 84 degrees. Average lows for these years also remain relatively high, although 2024 has the highest low temperature, just over 62 degrees.</p>
+</section>
+<section id="average-monthly-rainfall-since-1990" class="level2">
+<h2 class="anchored" data-anchor-id="average-monthly-rainfall-since-1990">Average monthly rainfall since 1990</h2>
+<p>Calculating total rainfall for each month since 1990, then average rainfall for each month.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>rain_month_year <span class="ot">&lt;-</span> weather <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">year</span>(date) <span class="sc">&gt;=</span> <span class="dv">1990</span>) <span class="sc">|&gt;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">year =</span> <span class="fu">year</span>(date), <span class="at">month =</span> <span class="fu">month</span>(date, <span class="at">label =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">total_rain =</span> <span class="fu">sum</span>(prcp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'year'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>rain_month_year <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(month) <span class="sc">|&gt;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_monthly_rain =</span> <span class="fu">mean</span>(total_rain, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(avg_monthly_rain))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["month"],"name":[1],"type":["ord"],"align":["right"]},{"label":["avg_monthly_rain"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"May","2":"5.033889"},{"1":"Oct","2":"3.837778"},{"1":"Jun","2":"3.375556"},{"1":"Sep","2":"3.045000"},{"1":"Nov","2":"2.833333"},{"1":"Mar","2":"2.649722"},{"1":"Aug","2":"2.621111"},{"1":"Jan","2":"2.567568"},{"1":"Dec","2":"2.540278"},{"1":"Apr","2":"2.514722"},{"1":"Jul","2":"2.084444"},{"1":"Feb","2":"1.874865"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Data Takeaway: Since 1990, May has been the wettest month in Austin by a large margin, averaging just over five inches of rain. February is the least rainy month, being the only one averaging under two inches.</p>
+</section>
+<section id="average-yearly-temperature" class="level2">
+<h2 class="anchored" data-anchor-id="average-yearly-temperature">Average yearly temperature</h2>
+<p>Calculating the average yearly temperature using the average high and average low temperatures.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">year =</span> <span class="fu">year</span>(date)) <span class="sc">|&gt;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_high_temp =</span> <span class="fu">mean</span>(tmax, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_low_temp =</span> <span class="fu">mean</span>(tmin, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">avg_year_temp =</span> (avg_high_temp <span class="sc">+</span> avg_low_temp) <span class="sc">/</span> <span class="dv">2</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(avg_year_temp))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["year"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["avg_high_temp"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["avg_low_temp"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["avg_year_temp"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"1938","2":"85.08879","3":"61.00467","4":"73.04673"},{"1":"2024","2":"83.43443","3":"62.07377","4":"72.75410"},{"1":"2023","2":"83.48219","3":"61.03836","4":"72.26027"},{"1":"2017","2":"82.98082","3":"61.33151","4":"72.15616"},{"1":"2011","2":"84.05753","3":"60.13699","4":"72.09726"},{"1":"2020","2":"82.99180","3":"60.65847","4":"71.82514"},{"1":"2025","2":"82.84637","3":"60.58939","4":"71.71788"},{"1":"2006","2":"83.03836","3":"60.28219","4":"71.66027"},{"1":"2012","2":"82.67760","3":"60.62568","4":"71.65164"},{"1":"2016","2":"81.60929","3":"61.13388","4":"71.37158"},{"1":"2022","2":"83.08493","3":"59.47123","4":"71.27808"},{"1":"1999","2":"82.07123","3":"60.34247","4":"71.20685"},{"1":"2008","2":"82.88251","3":"58.90164","4":"70.89208"},{"1":"2021","2":"81.38630","3":"60.29863","4":"70.84247"},{"1":"1998","2":"80.62466","3":"61.00548","4":"70.81507"},{"1":"1990","2":"81.44384","3":"60.03836","4":"70.74110"},{"1":"2019","2":"81.44110","3":"59.96986","4":"70.70548"},{"1":"2009","2":"81.85205","3":"59.33699","4":"70.59452"},{"1":"1954","2":"82.21644","3":"58.69863","4":"70.45753"},{"1":"2018","2":"80.72329","3":"60.18904","4":"70.45616"},{"1":"2000","2":"80.65301","3":"59.85792","4":"70.25546"},{"1":"1956","2":"82.20765","3":"58.27596","4":"70.24180"},{"1":"2013","2":"81.36164","3":"58.76986","4":"70.06575"},{"1":"2005","2":"80.87123","3":"59.15342","4":"70.01233"},{"1":"1994","2":"80.14795","3":"59.62740","4":"69.88767"},{"1":"2015","2":"80.03288","3":"59.68493","4":"69.85890"},{"1":"1971","2":"80.28767","3":"59.04110","4":"69.66438"},{"1":"2003","2":"80.03562","3":"59.21096","4":"69.62329"},{"1":"1986","2":"79.29041","3":"59.67945","4":"69.48493"},{"1":"1955","2":"80.74795","3":"58.16164","4":"69.45479"},{"1":"2004","2":"78.93169","3":"59.77049","4":"69.35109"},{"1":"1984","2":"80.15027","3":"58.53825","4":"69.34426"},{"1":"1981","2":"79.18630","3":"59.48219","4":"69.33425"},{"1":"1963","2":"80.41644","3":"58.20548","4":"69.31096"},{"1":"1996","2":"80.15847","3":"58.27869","4":"69.21858"},{"1":"1982","2":"79.11781","3":"59.28493","4":"69.20137"},{"1":"1988","2":"80.20765","3":"58.17486","4":"69.19126"},{"1":"2010","2":"79.67397","3":"58.57808","4":"69.12603"},{"1":"2007","2":"78.86027","3":"59.38630","4":"69.12329"},{"1":"2014","2":"79.69315","3":"58.38904","4":"69.04110"},{"1":"1951","2":"80.62192","3":"57.40548","4":"69.01370"},{"1":"1991","2":"78.85479","3":"59.12329","4":"68.98904"},{"1":"1939","2":"81.15616","3":"56.76164","4":"68.95890"},{"1":"1980","2":"79.68306","3":"58.21585","4":"68.94945"},{"1":"1953","2":"80.33425","3":"57.55068","4":"68.94247"},{"1":"1995","2":"78.83836","3":"58.93151","4":"68.88493"},{"1":"2002","2":"79.01918","3":"58.70685","4":"68.86301"},{"1":"1950","2":"79.82740","3":"57.89041","4":"68.85890"},{"1":"1992","2":"78.82787","3":"58.83607","4":"68.83197"},{"1":"2001","2":"78.84110","3":"58.68219","4":"68.76164"},{"1":"1977","2":"79.18904","3":"58.23836","4":"68.71370"},{"1":"1967","2":"79.65479","3":"57.72603","4":"68.69041"},{"1":"1962","2":"79.33425","3":"58.02740","4":"68.68082"},{"1":"1989","2":"79.38630","3":"57.83014","4":"68.60822"},{"1":"1993","2":"78.76164","3":"58.39452","4":"68.57808"},{"1":"1964","2":"78.95628","3":"57.99727","4":"68.47678"},{"1":"1972","2":"78.68033","3":"58.24590","4":"68.46311"},{"1":"1965","2":"78.09589","3":"58.47945","4":"68.28767"},{"1":"1945","2":"78.67123","3":"57.87945","4":"68.27534"},{"1":"1987","2":"78.46849","3":"58.07671","4":"68.27260"},{"1":"1985","2":"77.80822","3":"58.69589","4":"68.25205"},{"1":"1946","2":"78.17260","3":"58.32603","4":"68.24932"},{"1":"1957","2":"78.06849","3":"58.33973","4":"68.20411"},{"1":"1948","2":"79.60656","3":"56.53552","4":"68.07104"},{"1":"1952","2":"79.46721","3":"56.61475","4":"68.04098"},{"1":"1949","2":"78.66027","3":"57.35890","4":"68.00959"},{"1":"1969","2":"78.31781","3":"57.55342","4":"67.93562"},{"1":"1974","2":"77.94521","3":"57.74521","4":"67.84521"},{"1":"1941","2":"77.69589","3":"57.89315","4":"67.79452"},{"1":"1943","2":"78.49863","3":"56.68767","4":"67.59315"},{"1":"1975","2":"77.95068","3":"57.13699","4":"67.54384"},{"1":"1973","2":"77.28767","3":"57.60822","4":"67.44795"},{"1":"1959","2":"77.87123","3":"56.99726","4":"67.43425"},{"1":"1961","2":"77.65205","3":"57.12055","4":"67.38630"},{"1":"1942","2":"78.12603","3":"56.36438","4":"67.24521"},{"1":"1944","2":"77.45628","3":"56.99180","4":"67.22404"},{"1":"1966","2":"77.77534","3":"56.66849","4":"67.22192"},{"1":"1947","2":"77.87945","3":"56.52877","4":"67.20411"},{"1":"1960","2":"76.92077","3":"57.46995","4":"67.19536"},{"1":"1997","2":"76.45479","3":"57.87945","4":"67.16712"},{"1":"1958","2":"77.19726","3":"57.01370","4":"67.10548"},{"1":"1978","2":"76.95342","3":"57.22192","4":"67.08767"},{"1":"1970","2":"77.44384","3":"56.72603","4":"67.08493"},{"1":"1979","2":"76.26027","3":"56.29041","4":"66.27534"},{"1":"1968","2":"76.35519","3":"56.13661","4":"66.24590"},{"1":"1983","2":"76.16164","3":"56.24110","4":"66.20137"},{"1":"1976","2":"76.28415","3":"56.05191","4":"66.16803"},{"1":"1940","2":"77.48361","3":"54.30601","4":"65.89481"},{"1":"2026","2":"64.57576","3":"40.39394","4":"52.48485"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Data Takeaway: Austin’s warmest year based on average yearly temperature is 1938, but all the top five years exceed 72 degrees. Disregarding 2026, 1940 was notably the lowest average yearly temperature, just under 66 degrees.</p>
+</section>
+<section id="earliest-100-degree-day-each-year" class="level2">
+<h2 class="anchored" data-anchor-id="earliest-100-degree-day-each-year">Earliest 100-degree day each year</h2>
+<p>What is the earliest date each year that reached 100 degrees?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(tmax <span class="sc">&gt;=</span> <span class="dv">100</span>) <span class="sc">|&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">year =</span> <span class="fu">year</span>(date)) <span class="sc">|&gt;</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(date) <span class="sc">|&gt;</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_min</span>(date, <span class="at">n =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year, date, tmax) <span class="sc">|&gt;</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(date)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["year"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["date"],"name":[2],"type":["date"],"align":["right"]},{"label":["tmax"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"1938","2":"1938-08-15","3":"101"},{"1":"1939","2":"1939-06-15","3":"101"},{"1":"1940","2":"1940-08-03","3":"100"},{"1":"1941","2":"1941-08-17","3":"100"},{"1":"1942","2":"1942-06-12","3":"101"},{"1":"1943","2":"1943-07-07","3":"102"},{"1":"1944","2":"1944-07-18","3":"100"},{"1":"1945","2":"1945-08-16","3":"100"},{"1":"1946","2":"1946-07-12","3":"100"},{"1":"1947","2":"1947-07-02","3":"100"},{"1":"1948","2":"1948-06-09","3":"101"},{"1":"1949","2":"1949-07-11","3":"100"},{"1":"1950","2":"1950-08-05","3":"100"},{"1":"1951","2":"1951-07-17","3":"101"},{"1":"1952","2":"1952-07-04","3":"100"},{"1":"1953","2":"1953-06-12","3":"103"},{"1":"1954","2":"1954-07-05","3":"100"},{"1":"1955","2":"1955-07-12","3":"101"},{"1":"1956","2":"1956-06-27","3":"100"},{"1":"1957","2":"1957-07-06","3":"100"},{"1":"1958","2":"1958-07-30","3":"100"},{"1":"1959","2":"1959-08-03","3":"100"},{"1":"1960","2":"1960-06-13","3":"101"},{"1":"1961","2":"1961-08-04","3":"101"},{"1":"1962","2":"1962-07-25","3":"100"},{"1":"1963","2":"1963-06-16","3":"100"},{"1":"1964","2":"1964-07-24","3":"100"},{"1":"1965","2":"1965-07-28","3":"101"},{"1":"1966","2":"1966-07-31","3":"101"},{"1":"1967","2":"1967-06-26","3":"100"},{"1":"1969","2":"1969-07-15","3":"101"},{"1":"1970","2":"1970-07-04","3":"102"},{"1":"1971","2":"1971-07-07","3":"101"},{"1":"1972","2":"1972-07-30","3":"100"},{"1":"1974","2":"1974-07-21","3":"100"},{"1":"1976","2":"1976-08-08","3":"100"},{"1":"1977","2":"1977-07-31","3":"101"},{"1":"1978","2":"1978-07-08","3":"100"},{"1":"1980","2":"1980-06-25","3":"100"},{"1":"1981","2":"1981-08-16","3":"101"},{"1":"1982","2":"1982-07-24","3":"100"},{"1":"1983","2":"1983-08-31","3":"101"},{"1":"1984","2":"1984-05-04","3":"100"},{"1":"1985","2":"1985-08-02","3":"100"},{"1":"1986","2":"1986-07-20","3":"100"},{"1":"1988","2":"1988-07-27","3":"100"},{"1":"1989","2":"1989-07-13","3":"100"},{"1":"1990","2":"1990-06-22","3":"102"},{"1":"1991","2":"1991-07-30","3":"102"},{"1":"1992","2":"1992-08-26","3":"101"},{"1":"1993","2":"1993-07-29","3":"100"},{"1":"1994","2":"1994-06-24","3":"101"},{"1":"1995","2":"1995-07-27","3":"100"},{"1":"1996","2":"1996-06-19","3":"100"},{"1":"1997","2":"1997-09-09","3":"100"},{"1":"1998","2":"1998-05-07","3":"102"},{"1":"1999","2":"1999-07-30","3":"100"},{"1":"2000","2":"2000-07-12","3":"101"},{"1":"2001","2":"2001-07-10","3":"100"},{"1":"2002","2":"2002-08-25","3":"100"},{"1":"2003","2":"2003-05-30","3":"101"},{"1":"2004","2":"2004-05-31","3":"100"},{"1":"2005","2":"2005-06-30","3":"100"},{"1":"2006","2":"2006-06-13","3":"101"},{"1":"2007","2":"2007-08-12","3":"100"},{"1":"2008","2":"2008-05-20","3":"101"},{"1":"2009","2":"2009-06-13","3":"100"},{"1":"2010","2":"2010-08-01","3":"102"},{"1":"2011","2":"2011-05-25","3":"100"},{"1":"2012","2":"2012-06-11","3":"101"},{"1":"2013","2":"2013-06-25","3":"101"},{"1":"2014","2":"2014-07-13","3":"100"},{"1":"2015","2":"2015-07-27","3":"100"},{"1":"2016","2":"2016-06-28","3":"101"},{"1":"2017","2":"2017-06-17","3":"101"},{"1":"2018","2":"2018-06-02","3":"101"},{"1":"2019","2":"2019-07-14","3":"100"},{"1":"2020","2":"2020-06-09","3":"100"},{"1":"2021","2":"2021-06-14","3":"100"},{"1":"2022","2":"2022-05-21","3":"100"},{"1":"2023","2":"2023-06-09","3":"100"},{"1":"2024","2":"2024-06-27","3":"100"},{"1":"2025","2":"2025-05-13","3":"101"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Data Takeaway: The earliest 100-degree days in Austin vary widely by year. For example, in 1938, the first 100-degree day was on Aug.&nbsp;15, while in 1939 it occurred as early as June 15.</p>
+<p>Which year had the earliest date?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(tmax <span class="sc">&gt;=</span> <span class="dv">100</span>) <span class="sc">|&gt;</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">day_of_year =</span> <span class="fu">yday</span>(date),</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">year =</span> <span class="fu">year</span>(date)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_min</span>(day_of_year, <span class="at">n =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year, date, tmax)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["year"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["date"],"name":[2],"type":["date"],"align":["right"]},{"label":["tmax"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"1984","2":"1984-05-04","3":"100"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Data Takeaway: The earliest 100-degree day in Austin’s recorded history occurred on May 4, 1984, reaching 100 degrees.</p>
+</section>
+<section id="latest-freeze-before-july-1" class="level2">
+<h2 class="anchored" data-anchor-id="latest-freeze-before-july-1">Latest freeze before July 1</h2>
+<p>Which year had the latest freeze date?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>weather <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(tmin <span class="sc">&lt;=</span> <span class="dv">32</span>, <span class="fu">month</span>(date) <span class="sc">&lt;</span> <span class="dv">7</span>, <span class="fu">year</span>(date) <span class="sc">&lt;</span> <span class="dv">2026</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">year</span>(date)) <span class="sc">|&gt;</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(date, <span class="at">n =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year, date, tmin)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["year"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["date"],"name":[2],"type":["date"],"align":["right"]},{"label":["tmin"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"2025","2":"2025-02-22","3":"30"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Data Takeaway: The latest freeze in Austin before July occurred on Feb.&nbsp;22, 2025, with a low of 30 degrees.</p>
 
 
 </section>
