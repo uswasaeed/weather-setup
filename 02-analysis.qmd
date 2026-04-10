@@ -225,3 +225,102 @@ weather |>
 
 Data Takeaway: The latest freeze in Austin before July occurred on Feb. 22, 2025, with a low of 30 degrees.
 
+## Days over 100 (visualized)
+
+Turning the years with the most 100+ degree days into a bar chart.
+
+```{r}
+hot_days_by_year <- weather |>
+  filter(tmax >= 100) |>
+  group_by(year = year(date)) |>
+  summarize(days_100_plus = n()) |>
+  arrange(desc(days_100_plus)) |>
+  filter(days_100_plus >= 50)
+
+ggplot(
+  hot_days_by_year,
+  aes(x = reorder(year, days_100_plus), y = days_100_plus)
+) +
+  geom_col() +
+  coord_flip() +
+  labs(
+    title = "Years with 50+ Days Over 100 Degrees in Austin",
+    subtitle = "Only years with at least 50 extreme heat days are shown",
+    caption = "By Uswa Saeed",
+    x = "Year",
+    y = "Number of 100+ Degree Days"
+  ) +
+  theme_minimal()
+```
+
+Data Takeaway: The number of 100+ degree days was highest in 2011, followed closely by 2023, 2022 and 2009. 
+
+## Average monthly rainfall since 1990 (visualized)
+
+Turning monthly rainfall averages into a column chart.
+
+```{r}
+rain_month_year <- weather |>
+  filter(year(date) >= 1990) |>
+  group_by(year = year(date), month = month(date, label = TRUE)) |>
+  summarize(total_rain = sum(prcp, na.rm = TRUE), .groups = "drop")
+
+avg_monthly_rain <- rain_month_year |>
+  group_by(month) |>
+  summarize(avg_monthly_rain = mean(total_rain, na.rm = TRUE)) |>
+  arrange(desc(avg_monthly_rain))
+
+ggplot(
+  avg_monthly_rain,
+  aes(x = month, y = avg_monthly_rain)
+) +
+  geom_col() +
+  labs(
+    title = "Average Monthly Rainfall in Austin Since 1990",
+    subtitle = "Monthly averages based on total rainfall per year",
+    caption = "By Uswa Saeed",
+    x = "Month",
+    y = "Average Rainfall (inches)"
+  ) +
+  theme_minimal()
+```
+
+Data Takeaway: May is the wettest month on average in Austin, while February consistently receives the least rainfall.
+
+## Average yearly temperatures (visualized)
+
+Line chart comparing average yearly high and low temperatures.
+
+```{r}
+yearly_temps <- weather |>
+  group_by(year = year(date)) |>
+  summarize(
+    avg_high_temp = mean(tmax, na.rm = TRUE),
+    avg_low_temp = mean(tmin, na.rm = TRUE)
+  ) |>
+  filter(year != 1938, year != 2026)
+
+yearly_temps_long <- yearly_temps |>
+  pivot_longer(
+    cols = c(avg_high_temp, avg_low_temp),
+    names_to = "type",
+    values_to = "temperature"
+  )
+
+ggplot(
+  yearly_temps_long,
+  aes(x = year, y = temperature, color = type)
+) +
+  geom_line() +
+  labs(
+    title = "Average Yearly High and Low Temperatures in Austin",
+    subtitle = "Excluding partial years",
+    caption = "By Uswa Saeed",
+    x = "Year",
+    y = "Temperature (°F)",
+    color = "Temperature Type"
+  ) +
+  theme_minimal()
+```
+
+Data Takeaway: Average high and low temperatures fluctuate across decades, but overall temparatures show a very slight increase.

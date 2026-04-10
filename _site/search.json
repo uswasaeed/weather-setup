@@ -56,41 +56,6 @@
     "text": "Days over 100\nWhich years had the most days of 100+ temperature? i.e., group by year and count the number of days with 100+ temps.\n\nweather |&gt;\n  filter(tmax &gt;= 100) |&gt;\n  group_by(year = year(date)) |&gt;\n  summarize(days_100_plus = n()) |&gt;\n  arrange(desc(days_100_plus)) |&gt;\n  filter(days_100_plus &gt;= 50)\n\n\n  \n\n\n\nData Takeaway: In 2011, Austin experienced 90 days with temperatures over 100 degrees, beating out 2023 by 10 more days over 100 degrees."
   },
   {
-    "objectID": "01-cleaning.html",
-    "href": "01-cleaning.html",
-    "title": "Cleaning",
-    "section": "",
-    "text": "Importing and cleaning weather data for analysis.\n\nlibrary(tidyverse)\nlibrary(janitor)"
-  },
-  {
-    "objectID": "01-cleaning.html#goal-of-this-notebook",
-    "href": "01-cleaning.html#goal-of-this-notebook",
-    "title": "Cleaning",
-    "section": "",
-    "text": "Importing and cleaning weather data for analysis.\n\nlibrary(tidyverse)\nlibrary(janitor)"
-  },
-  {
-    "objectID": "01-cleaning.html#import",
-    "href": "01-cleaning.html#import",
-    "title": "Cleaning",
-    "section": "Import",
-    "text": "Import\nImporting the weather data into the project.\n\nweather &lt;- read_csv(\"data-original/weather.csv\")\n\nWarning: One or more parsing issues, call `problems()` on your data frame for details,\ne.g.:\n  dat &lt;- vroom(...)\n  problems(dat)\n\n\nRows: 32022 Columns: 10\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr  (2): STATION, NAME\ndbl  (6): PRCP, SNOW, SNWD, TAVG, TMAX, TMIN\nlgl  (1): TOBS\ndate (1): DATE\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\nweather |&gt; glimpse()\n\nRows: 32,022\nColumns: 10\n$ STATION &lt;chr&gt; \"USW00013958\", \"USW00013958\", \"USW00013958\", \"USW00013958\", \"U…\n$ NAME    &lt;chr&gt; \"AUSTIN CAMP MABRY, TX US\", \"AUSTIN CAMP MABRY, TX US\", \"AUSTI…\n$ DATE    &lt;date&gt; 1938-06-01, 1938-06-02, 1938-06-03, 1938-06-04, 1938-06-05, 1…\n$ PRCP    &lt;dbl&gt; 0.00, 0.00, 0.00, 0.40, 0.02, 0.00, 0.00, 0.00, 1.60, 0.01, 0.…\n$ SNOW    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…\n$ SNWD    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…\n$ TAVG    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…\n$ TMAX    &lt;dbl&gt; 91, 94, 94, 90, 94, 92, 95, 92, 87, 90, 92, 91, 91, 91, 89, 89…\n$ TMIN    &lt;dbl&gt; 72, 67, 70, 68, 68, 70, 70, 76, 64, 76, 75, 71, 70, 68, 71, 70…\n$ TOBS    &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…"
-  },
-  {
-    "objectID": "01-cleaning.html#clean-columns",
-    "href": "01-cleaning.html#clean-columns",
-    "title": "Cleaning",
-    "section": "Clean columns",
-    "text": "Clean columns\nCleaning the columns and column names.\n\nweather_clean &lt;- weather |&gt;\n  clean_names() |&gt;\n  select(!c(tavg, tobs))\n\nweather_clean |&gt; glimpse()\n\nRows: 32,022\nColumns: 8\n$ station &lt;chr&gt; \"USW00013958\", \"USW00013958\", \"USW00013958\", \"USW00013958\", \"U…\n$ name    &lt;chr&gt; \"AUSTIN CAMP MABRY, TX US\", \"AUSTIN CAMP MABRY, TX US\", \"AUSTI…\n$ date    &lt;date&gt; 1938-06-01, 1938-06-02, 1938-06-03, 1938-06-04, 1938-06-05, 1…\n$ prcp    &lt;dbl&gt; 0.00, 0.00, 0.00, 0.40, 0.02, 0.00, 0.00, 0.00, 1.60, 0.01, 0.…\n$ snow    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…\n$ snwd    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…\n$ tmax    &lt;dbl&gt; 91, 94, 94, 90, 94, 92, 95, 92, 87, 90, 92, 91, 91, 91, 89, 89…\n$ tmin    &lt;dbl&gt; 72, 67, 70, 68, 68, 70, 70, 76, 64, 76, 75, 71, 70, 68, 71, 70…"
-  },
-  {
-    "objectID": "01-cleaning.html#export",
-    "href": "01-cleaning.html#export",
-    "title": "Cleaning",
-    "section": "Export",
-    "text": "Export\nExporting the cleaned data as rds.\n\nwrite_rds(\n  weather_clean,\n  \"data-processed/01-weather-cleaned.rds\"\n)"
-  },
-  {
     "objectID": "02-analysis.html#years-with-the-most-rainfall",
     "href": "02-analysis.html#years-with-the-most-rainfall",
     "title": "Analysis",
@@ -145,5 +110,61 @@
     "title": "Analysis",
     "section": "Latest freeze before July 1",
     "text": "Latest freeze before July 1\nWhich year had the latest freeze date?\n\nweather |&gt;\n  filter(tmin &lt;= 32, month(date) &lt; 7, year(date) &lt; 2026) |&gt; \n  mutate(year = year(date)) |&gt;\n  slice_max(date, n = 1) |&gt;\n  select(year, date, tmin)\n\n\n  \n\n\n\nData Takeaway: The latest freeze in Austin before July occurred on Feb. 22, 2025, with a low of 30 degrees."
+  },
+  {
+    "objectID": "01-cleaning.html",
+    "href": "01-cleaning.html",
+    "title": "Cleaning",
+    "section": "",
+    "text": "Importing and cleaning weather data for analysis.\n\nlibrary(tidyverse)\nlibrary(janitor)"
+  },
+  {
+    "objectID": "01-cleaning.html#goal-of-this-notebook",
+    "href": "01-cleaning.html#goal-of-this-notebook",
+    "title": "Cleaning",
+    "section": "",
+    "text": "Importing and cleaning weather data for analysis.\n\nlibrary(tidyverse)\nlibrary(janitor)"
+  },
+  {
+    "objectID": "01-cleaning.html#import",
+    "href": "01-cleaning.html#import",
+    "title": "Cleaning",
+    "section": "Import",
+    "text": "Import\nImporting the weather data into the project.\n\nweather &lt;- read_csv(\"data-original/weather.csv\")\n\nWarning: One or more parsing issues, call `problems()` on your data frame for details,\ne.g.:\n  dat &lt;- vroom(...)\n  problems(dat)\n\n\nRows: 32022 Columns: 10\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr  (2): STATION, NAME\ndbl  (6): PRCP, SNOW, SNWD, TAVG, TMAX, TMIN\nlgl  (1): TOBS\ndate (1): DATE\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\nweather |&gt; glimpse()\n\nRows: 32,022\nColumns: 10\n$ STATION &lt;chr&gt; \"USW00013958\", \"USW00013958\", \"USW00013958\", \"USW00013958\", \"U…\n$ NAME    &lt;chr&gt; \"AUSTIN CAMP MABRY, TX US\", \"AUSTIN CAMP MABRY, TX US\", \"AUSTI…\n$ DATE    &lt;date&gt; 1938-06-01, 1938-06-02, 1938-06-03, 1938-06-04, 1938-06-05, 1…\n$ PRCP    &lt;dbl&gt; 0.00, 0.00, 0.00, 0.40, 0.02, 0.00, 0.00, 0.00, 1.60, 0.01, 0.…\n$ SNOW    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…\n$ SNWD    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…\n$ TAVG    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…\n$ TMAX    &lt;dbl&gt; 91, 94, 94, 90, 94, 92, 95, 92, 87, 90, 92, 91, 91, 91, 89, 89…\n$ TMIN    &lt;dbl&gt; 72, 67, 70, 68, 68, 70, 70, 76, 64, 76, 75, 71, 70, 68, 71, 70…\n$ TOBS    &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…"
+  },
+  {
+    "objectID": "01-cleaning.html#clean-columns",
+    "href": "01-cleaning.html#clean-columns",
+    "title": "Cleaning",
+    "section": "Clean columns",
+    "text": "Clean columns\nCleaning the columns and column names.\n\nweather_clean &lt;- weather |&gt;\n  clean_names() |&gt;\n  select(!c(tavg, tobs))\n\nweather_clean |&gt; glimpse()\n\nRows: 32,022\nColumns: 8\n$ station &lt;chr&gt; \"USW00013958\", \"USW00013958\", \"USW00013958\", \"USW00013958\", \"U…\n$ name    &lt;chr&gt; \"AUSTIN CAMP MABRY, TX US\", \"AUSTIN CAMP MABRY, TX US\", \"AUSTI…\n$ date    &lt;date&gt; 1938-06-01, 1938-06-02, 1938-06-03, 1938-06-04, 1938-06-05, 1…\n$ prcp    &lt;dbl&gt; 0.00, 0.00, 0.00, 0.40, 0.02, 0.00, 0.00, 0.00, 1.60, 0.01, 0.…\n$ snow    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…\n$ snwd    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…\n$ tmax    &lt;dbl&gt; 91, 94, 94, 90, 94, 92, 95, 92, 87, 90, 92, 91, 91, 91, 89, 89…\n$ tmin    &lt;dbl&gt; 72, 67, 70, 68, 68, 70, 70, 76, 64, 76, 75, 71, 70, 68, 71, 70…"
+  },
+  {
+    "objectID": "01-cleaning.html#export",
+    "href": "01-cleaning.html#export",
+    "title": "Cleaning",
+    "section": "Export",
+    "text": "Export\nExporting the cleaned data as rds.\n\nwrite_rds(\n  weather_clean,\n  \"data-processed/01-weather-cleaned.rds\"\n)"
+  },
+  {
+    "objectID": "02-analysis.html#days-over-100-visualized",
+    "href": "02-analysis.html#days-over-100-visualized",
+    "title": "Analysis",
+    "section": "Days over 100 (visualized)",
+    "text": "Days over 100 (visualized)\nTurning the years with the most 100+ degree days into a bar chart.\n\nhot_days_by_year &lt;- weather |&gt;\n  filter(tmax &gt;= 100) |&gt;\n  group_by(year = year(date)) |&gt;\n  summarize(days_100_plus = n()) |&gt;\n  arrange(desc(days_100_plus)) |&gt;\n  filter(days_100_plus &gt;= 50)\n\nggplot(\n  hot_days_by_year,\n  aes(x = reorder(year, days_100_plus), y = days_100_plus)\n) +\n  geom_col() +\n  coord_flip() +\n  labs(\n    title = \"Years with 50+ Days Over 100 Degrees in Austin\",\n    subtitle = \"Only years with at least 50 extreme heat days are shown\",\n    caption = \"By Uswa Saeed\",\n    x = \"Year\",\n    y = \"Number of 100+ Degree Days\"\n  ) +\n  theme_minimal()\n\n\n\n\n\n\n\n\nData Takeaway: The number of 100+ degree days was highest in 2011, followed closely by 2023, 2022 and 2009."
+  },
+  {
+    "objectID": "02-analysis.html#average-monthly-rainfall-since-1990-visualized",
+    "href": "02-analysis.html#average-monthly-rainfall-since-1990-visualized",
+    "title": "Analysis",
+    "section": "Average monthly rainfall since 1990 (visualized)",
+    "text": "Average monthly rainfall since 1990 (visualized)\nTurning monthly rainfall averages into a column chart.\n\nrain_month_year &lt;- weather |&gt;\n  filter(year(date) &gt;= 1990) |&gt;\n  group_by(year = year(date), month = month(date, label = TRUE)) |&gt;\n  summarize(total_rain = sum(prcp, na.rm = TRUE), .groups = \"drop\")\n\navg_monthly_rain &lt;- rain_month_year |&gt;\n  group_by(month) |&gt;\n  summarize(avg_monthly_rain = mean(total_rain, na.rm = TRUE)) |&gt;\n  arrange(desc(avg_monthly_rain))\n\nggplot(\n  avg_monthly_rain,\n  aes(x = month, y = avg_monthly_rain)\n) +\n  geom_col() +\n  labs(\n    title = \"Average Monthly Rainfall in Austin Since 1990\",\n    subtitle = \"Monthly averages based on total rainfall per year\",\n    caption = \"By Uswa Saeed\",\n    x = \"Month\",\n    y = \"Average Rainfall (inches)\"\n  ) +\n  theme_minimal()\n\n\n\n\n\n\n\n\nData Takeaway: May is the wettest month on average in Austin, while February consistently receives the least rainfall."
+  },
+  {
+    "objectID": "02-analysis.html#average-yearly-temperatures-visualized",
+    "href": "02-analysis.html#average-yearly-temperatures-visualized",
+    "title": "Analysis",
+    "section": "Average yearly temperatures (visualized)",
+    "text": "Average yearly temperatures (visualized)\nLine chart comparing average yearly high and low temperatures.\n\nyearly_temps &lt;- weather |&gt;\n  group_by(year = year(date)) |&gt;\n  summarize(\n    avg_high_temp = mean(tmax, na.rm = TRUE),\n    avg_low_temp = mean(tmin, na.rm = TRUE)\n  ) |&gt;\n  filter(year != 1938, year != 2026)\n\nyearly_temps_long &lt;- yearly_temps |&gt;\n  pivot_longer(\n    cols = c(avg_high_temp, avg_low_temp),\n    names_to = \"type\",\n    values_to = \"temperature\"\n  )\n\nggplot(\n  yearly_temps_long,\n  aes(x = year, y = temperature, color = type)\n) +\n  geom_line() +\n  labs(\n    title = \"Average Yearly High and Low Temperatures in Austin\",\n    subtitle = \"Excluding partial years\",\n    caption = \"By Uswa Saeed\",\n    x = \"Year\",\n    y = \"Temperature (°F)\",\n    color = \"Temperature Type\"\n  ) +\n  theme_minimal()\n\n\n\n\n\n\n\n\nData Takeaway: Average high and low temperatures fluctuate across decades, but overall temparatures show a very slight increase."
   }
 ]
