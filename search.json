@@ -112,6 +112,27 @@
     "text": "Latest freeze before July 1\nWhich year had the latest freeze date?\n\nweather |&gt;\n  filter(tmin &lt;= 32, month(date) &lt; 7, year(date) &lt; 2026) |&gt; \n  mutate(year = year(date)) |&gt;\n  slice_max(date, n = 1) |&gt;\n  select(year, date, tmin)\n\n\n  \n\n\n\nData Takeaway: The latest freeze in Austin before July occurred on Feb. 22, 2025, with a low of 30 degrees."
   },
   {
+    "objectID": "02-analysis.html#days-over-100-visualized",
+    "href": "02-analysis.html#days-over-100-visualized",
+    "title": "Analysis",
+    "section": "Days over 100 (visualized)",
+    "text": "Days over 100 (visualized)\nTurning the years with the most 100+ degree days into a bar chart.\n\nhot_days_by_year &lt;- weather |&gt;\n  filter(tmax &gt;= 100) |&gt;\n  group_by(year = year(date)) |&gt;\n  summarize(days_100_plus = n()) |&gt;\n  arrange(desc(days_100_plus)) |&gt;\n  filter(days_100_plus &gt;= 50)\n\nggplot(\n  hot_days_by_year,\n  aes(x = reorder(year, days_100_plus), y = days_100_plus)\n) +\n  geom_col() +\n  coord_flip() +\n  labs(\n    title = \"Years with 50+ Days Over 100 Degrees in Austin\",\n    subtitle = \"Only years with at least 50 extreme heat days are shown\",\n    caption = \"By Uswa Saeed\",\n    x = \"Year\",\n    y = \"Number of 100+ Degree Days\"\n  ) +\n  theme_minimal()\n\n\n\n\n\n\n\n\nData Takeaway: The number of 100+ degree days was highest in 2011, followed closely by 2023, 2022 and 2009."
+  },
+  {
+    "objectID": "02-analysis.html#average-monthly-rainfall-since-1990-visualized",
+    "href": "02-analysis.html#average-monthly-rainfall-since-1990-visualized",
+    "title": "Analysis",
+    "section": "Average monthly rainfall since 1990 (visualized)",
+    "text": "Average monthly rainfall since 1990 (visualized)\nTurning monthly rainfall averages into a column chart.\n\nrain_month_year &lt;- weather |&gt;\n  filter(year(date) &gt;= 1990) |&gt;\n  group_by(year = year(date), month = month(date, label = TRUE)) |&gt;\n  summarize(total_rain = sum(prcp, na.rm = TRUE), .groups = \"drop\")\n\navg_monthly_rain &lt;- rain_month_year |&gt;\n  group_by(month) |&gt;\n  summarize(avg_monthly_rain = mean(total_rain, na.rm = TRUE)) |&gt;\n  arrange(desc(avg_monthly_rain))\n\nggplot(\n  avg_monthly_rain,\n  aes(x = month, y = avg_monthly_rain)\n) +\n  geom_col() +\n  labs(\n    title = \"Average Monthly Rainfall in Austin Since 1990\",\n    subtitle = \"Monthly averages based on total rainfall per year\",\n    caption = \"By Uswa Saeed\",\n    x = \"Month\",\n    y = \"Average Rainfall (inches)\"\n  ) +\n  theme_minimal()\n\n\n\n\n\n\n\n\nData Takeaway: May is the wettest month on average in Austin, while February consistently receives the least rainfall."
+  },
+  {
+    "objectID": "02-analysis.html#average-yearly-temperatures-visualized",
+    "href": "02-analysis.html#average-yearly-temperatures-visualized",
+    "title": "Analysis",
+    "section": "Average yearly temperatures (visualized)",
+    "text": "Average yearly temperatures (visualized)\nLine chart comparing average yearly high and low temperatures.\n\nyearly_temps &lt;- weather |&gt;\n  group_by(year = year(date)) |&gt;\n  summarize(\n    avg_high_temp = mean(tmax, na.rm = TRUE),\n    avg_low_temp = mean(tmin, na.rm = TRUE)\n  ) |&gt;\n  filter(year != 1938, year != 2026)\n\nyearly_temps_long &lt;- yearly_temps |&gt;\n  pivot_longer(\n    cols = c(avg_high_temp, avg_low_temp),\n    names_to = \"type\",\n    values_to = \"temperature\"\n  )\n\nggplot(\n  yearly_temps_long,\n  aes(x = year, y = temperature, color = type)\n) +\n  geom_line() +\n  labs(\n    title = \"Average Yearly High and Low Temperatures in Austin\",\n    subtitle = \"Excluding partial years\",\n    caption = \"By Uswa Saeed\",\n    x = \"Year\",\n    y = \"Temperature (°F)\",\n    color = \"Temperature Type\"\n  ) +\n  theme_minimal()\n\n\n\n\n\n\n\n\nData Takeaway: Average high and low temperatures fluctuate across decades, but overall temparatures show a very slight increase."
+  },
+  {
     "objectID": "01-cleaning.html",
     "href": "01-cleaning.html",
     "title": "Cleaning",
